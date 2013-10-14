@@ -3,4 +3,5 @@ tmp
 .librarian/
 .kitchen/
 .kitchen.local.yml
+.vagrant*
 Berksfile.lock

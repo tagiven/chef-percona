@@ -12,8 +12,8 @@ Vagrant.configure("2") do |config|
     config.vm.box_url = "http://files.vagrantup.com/precise64.box"
   end
   config.vm.network :private_network, ip: "33.33.33.10"
-  config.ssh.max_tries = 40
-  config.ssh.timeout   = 120
+  # config.ssh.max_tries = 40
+  # config.ssh.timeout   = 120
   # config.omnibus.chef_version = :latest
   config.omnibus.chef_version = "11.4.4"
   config.berkshelf.enabled = true

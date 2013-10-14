@@ -20,6 +20,16 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.log_level = :debug
-    chef.run_list = ["recipe[percona::server]"]
+    chef.json = {
+      :percona => {
+        :server => {
+          :includedir => ""
+        }
+      }
+    }
+    chef.run_list = [
+      "recipe[percona::package_repo]",
+      "recipe[percona::server]"
+    ]
   end
 end

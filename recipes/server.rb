@@ -14,6 +14,11 @@ when "rhel"
     not_if "rpm -qa | grep Percona-Server-shared-55"
   end
 
+  # Dependency of Percona Server
+  package "socat" do
+    action :install
+  end
+
   # we need mysqladmin
   include_recipe "percona::client"
 

@@ -11,6 +11,13 @@ when "rhel"
     action :remove
   end
 
+  # Dependency of Percona Server
+  include_recipe "yum::epel"
+
+  package "socat" do
+    action :install
+  end
+
   package "Percona-XtraDB-Cluster-server"
 end
 

@@ -20,6 +20,23 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.log_level = :debug
+    chef.json = {
+      :percona => {
+        :server => {
+          :includedir => "",
+          :role => "cluster",
+          :bind_address => "33.33.33.20"
+        },
+        :cluster => {
+          :wsrep_cluster_name => "percona_cluster",
+          :wsrep_cluster_address => "gcomm://33.33.33.20,33.33.33.30,33.33.33.10",
+          :wsrep_node_address => "33.33.33.10",
+          :wsrep_node_name => "percona01",
+          :wsrep_sst_method => "xtrabackup",
+          :wsrep_sst_auth => "sstuser:password"
+        }
+      }
+    } 
     chef.run_list = [
       "recipe[percona::package_repo]",
       "recipe[percona::cluster]"

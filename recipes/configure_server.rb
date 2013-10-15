@@ -57,13 +57,29 @@ execute "setup mysql datadir" do
   not_if "test -f #{datadir}/mysql/user.frm"
 end
 
+# Boot strap initial node
+execute "bootstrap cluster" do
+  case node["platform_family"]
+  when "rhel"
+    command "service mysql bootstrap-pxc"
+  when "fedora"
+    command "service mysql bootstrap-pxc"
+  when "debian"
+    command "service mysql bootstrap-pxc"
+  else
+    comand "service mysql bootstrap-pxc"
+  end
+  action :nothing
+end
+
 # setup the main server config file
 template percona["main_config_file"] do
   source "my.cnf.#{conf ? "custom" : server["role"]}.erb"
   owner "root"
   group "root"
-  mode 0744
-  notifies :restart, "service[mysql]", :immediately if node["percona"]["auto_restart"]
+  mode 0640
+  #notifies :restart, "service[mysql]", :immediately if node["percona"]["auto_restart"]
+  notifies :run, resources(:execute => "bootstrap cluster"), :immediately if node["percona"]["auto_restart"]
 end
 
 # now let's set the root password only if this is the initial install

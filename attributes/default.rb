@@ -46,7 +46,7 @@ default["percona"]["encrypted_data_bag"]                        = "passwords"
 default["percona"]["server"]["enable"]                          = true
 
 # Basic Settings
-default["percona"]["server"]["role"]                            = "cluster"
+default["percona"]["server"]["role"]                            = "server"
 default["percona"]["server"]["username"]                        = "mysql"
 default["percona"]["server"]["datadir"]                         = "/var/lib/mysql"
 default["percona"]["server"]["tmpdir"]                          = "/tmp"
@@ -147,9 +147,11 @@ end
 default["percona"]["cluster"]["binlog_format"]                  = "ROW"
 default["percona"]["cluster"]["wsrep_provider"]                 = "/usr/lib64/libgalera_smm.so"
 default["percona"]["cluster"]["wsrep_cluster_address"]          = ""
+default["percona"]["cluster"]["wsrep_node_address"]             = ""
 default["percona"]["cluster"]["wsrep_slave_threads"]            = 2
 default["percona"]["cluster"]["wsrep_cluster_name"]             = ""
 default["percona"]["cluster"]["wsrep_sst_method"]               = "rsync"
+default["percona"]["cluster"]["wsrep_sst_auth"]                 = ""
 default["percona"]["cluster"]["wsrep_node_name"]                = ""
 default["percona"]["cluster"]["innodb_locks_unsafe_for_binlog"] = 1
 default["percona"]["cluster"]["innodb_autoinc_lock_mode"]       = 2

@@ -63,7 +63,7 @@ default["percona"]["server"]["skip_external_locking"]           = true
 default["percona"]["server"]["net_read_timeout"]                = 120
 default["percona"]["server"]["old_passwords"]                   = 1
 default["percona"]["server"]["bind_address"]                    = "127.0.0.1"
-%w[debian_password root_password].each do |attribute|
+%w[debian_password root_password sst_password].each do |attribute|
   next if defined?(node["percona"]["server"][attribute])
   default["percona"]["server"][attribute]                       = secure_password
 end
@@ -148,10 +148,11 @@ default["percona"]["cluster"]["binlog_format"]                  = "ROW"
 default["percona"]["cluster"]["wsrep_provider"]                 = "/usr/lib64/libgalera_smm.so"
 default["percona"]["cluster"]["wsrep_cluster_address"]          = ""
 default["percona"]["cluster"]["wsrep_node_address"]             = ""
+default["percona"]["cluster"]["bootstrap"]                      = false
 default["percona"]["cluster"]["wsrep_slave_threads"]            = 2
 default["percona"]["cluster"]["wsrep_cluster_name"]             = ""
 default["percona"]["cluster"]["wsrep_sst_method"]               = "rsync"
-default["percona"]["cluster"]["wsrep_sst_auth"]                 = ""
+default["percona"]["cluster"]["wsrep_sst_user"]                 = ""
 default["percona"]["cluster"]["wsrep_node_name"]                = ""
 default["percona"]["cluster"]["innodb_locks_unsafe_for_binlog"] = 1
 default["percona"]["cluster"]["innodb_autoinc_lock_mode"]       = 2

@@ -25,7 +25,8 @@ Vagrant.configure("2") do |config|
         :server => {
           :includedir => "",
           :role => "cluster",
-          :bind_address => "33.33.33.20"
+          :bind_address => "33.33.33.20",
+          :sst_password => "sstpassword"
         },
         :cluster => {
           :wsrep_cluster_name => "percona_cluster",
@@ -33,7 +34,8 @@ Vagrant.configure("2") do |config|
           :wsrep_node_address => "33.33.33.10",
           :wsrep_node_name => "percona01",
           :wsrep_sst_method => "xtrabackup",
-          :wsrep_sst_auth => "sstuser:password"
+          :wsrep_sst_user => "sstuser",
+          :bootstrap => true
         }
       }
     } 

@@ -60,14 +60,12 @@ end
 # Boot strap initial node
 execute "bootstrap cluster" do
   case node["platform_family"]
-  when "rhel"
-    command "service mysql bootstrap-pxc"
-  when "fedora"
+  when "rhel","fedora"
     command "service mysql bootstrap-pxc"
   when "debian"
     command "service mysql bootstrap-pxc"
   else
-    comand "service mysql bootstrap-pxc"
+    command "service mysql bootstrap-pxc"
   end
   action :nothing
 end
@@ -77,15 +75,25 @@ template percona["main_config_file"] do
   source "my.cnf.#{conf ? "custom" : server["role"]}.erb"
   owner "root"
   group "root"
-  mode 0640
-  #notifies :restart, "service[mysql]", :immediately if node["percona"]["auto_restart"]
-  notifies :run, resources(:execute => "bootstrap cluster"), :immediately if node["percona"]["auto_restart"]
+  mode 0600
+  if node["percona"]["cluster"]["bootstrap"] 
+    notifies :run, resources(:execute => "bootstrap cluster"), :immediately if node["percona"]["auto_restart"]
+  else
+    notifies :restart, "service[mysql]", :immediately if node["percona"]["auto_restart"]
+  end
 end
 
 # now let's set the root password only if this is the initial install
 execute "Update MySQL root password" do
   command "mysqladmin --user=root --password='' password '#{passwords.root_password}'"
   not_if "test -f /etc/mysql/grants.sql"
+end
+
+# create SST User
+execute "create SST user" do 
+  command "mysql -e \"GRANT RELOAD,LOCK TABLES,REPLICATION CLIENT,CREATE TABLESPACE,SUPER ON *.* TO '#{node["percona"]["cluster"]["wsrep_sst_user"]}'@'localhost' IDENTIFIED BY '#{node["percona"]["server"]["sst_password"]}';\""
+  not_if node["percona"]["cluster"]["wsrep_sst_user"].empty?
+  action :run
 end
 
 # setup the debian system user config

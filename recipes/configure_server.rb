@@ -92,7 +92,7 @@ end
 # create SST User
 execute "create SST user" do 
   command "mysql -e \"GRANT RELOAD,LOCK TABLES,REPLICATION CLIENT,CREATE TABLESPACE,SUPER ON *.* TO '#{node["percona"]["cluster"]["wsrep_sst_user"]}'@'localhost' IDENTIFIED BY '#{node["percona"]["server"]["sst_password"]}';\""
-  not_if node["percona"]["cluster"]["wsrep_sst_user"].empty?
+  not_if { node["percona"]["cluster"]["wsrep_sst_user"].empty? }
   action :run
 end
 

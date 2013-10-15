@@ -61,7 +61,7 @@ wsrep_cluster_address          = <%= node["percona"]["cluster"]["wsrep_cluster_a
 wsrep_slave_threads            = <%= node["percona"]["cluster"]["wsrep_slave_threads"] %>
 wsrep_cluster_name             = <%= node["percona"]["cluster"]["wsrep_cluster_name"] %>
 wsrep_sst_method               = <%= node["percona"]["cluster"]["wsrep_sst_method"] %>
-<% if !node["percona"]["cluster"]["wsrep_sst_user"].empty? %>
+<% unless node["percona"]["cluster"]["wsrep_sst_user"].empty? %>
 wsrep_sst_auth                 = <%= node["percona"]["cluster"]["wsrep_sst_user"] %>:<%= node["percona"]["server"]["sst_password"] %>
 <% else %>
 wsrep_sst_auth                 = ""

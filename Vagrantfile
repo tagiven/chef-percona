@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
     config.vm.box = "vagrant-ubuntu-12.04"
     config.vm.box_url = "http://files.vagrantup.com/precise64.box"
   end
-  config.vm.network :private_network, ip: "33.33.33.10"
+  config.vm.network :private_network, ip: "33.33.33.20"
   # config.ssh.max_tries = 40
   # config.ssh.timeout   = 120
   # config.omnibus.chef_version = :latest
@@ -20,16 +20,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.log_level = :debug
-    chef.json = {
-      :percona => {
-        :server => {
-          :includedir => ""
-        }
-      }
-    }
     chef.run_list = [
       "recipe[percona::package_repo]",
-      "recipe[percona::server]"
+      "recipe[percona::cluster]"
     ]
   end
 end

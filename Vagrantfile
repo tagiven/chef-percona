@@ -29,12 +29,13 @@ Vagrant.configure("2") do |config|
           :sst_password => "sstpassword"
         },
         :cluster => {
-          :wsrep_cluster_name => "percona_cluster",
+          :wsrep_cluster_name => "",
           :wsrep_cluster_address => "gcomm://33.33.33.20,33.33.33.30,33.33.33.10",
           :wsrep_node_address => "33.33.33.10",
           :wsrep_node_name => "percona01",
           :wsrep_sst_method => "xtrabackup",
-          :wsrep_sst_user => "sstuser",
+          :sst_user => "sstuser",
+          :sst_password => "sstpassword",
           :bootstrap => true
         }
       }

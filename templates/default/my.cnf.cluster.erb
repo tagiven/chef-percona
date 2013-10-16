@@ -59,7 +59,9 @@ binlog_format                  = <%= node["percona"]["cluster"]["binlog_format"]
 wsrep_provider                 = <%= node["percona"]["cluster"]["wsrep_provider"] %>
 wsrep_cluster_address          = <%= node["percona"]["cluster"]["wsrep_cluster_address"] %>
 wsrep_slave_threads            = <%= node["percona"]["cluster"]["wsrep_slave_threads"] %>
+<% unless node["percona"]["cluster"]["wsrep_cluster_name"].empty? %>
 wsrep_cluster_name             = <%= node["percona"]["cluster"]["wsrep_cluster_name"] %>
+<% end %>
 wsrep_sst_method               = <%= node["percona"]["cluster"]["wsrep_sst_method"] %>
 <% unless node["percona"]["cluster"]["sst_user"].empty? %>
 wsrep_sst_auth                 = <%= node["percona"]["cluster"]["sst_user"] %>:<%= node["percona"]["cluster"]["sst_password"] %>

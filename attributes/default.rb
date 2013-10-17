@@ -46,7 +46,7 @@ default["percona"]["encrypted_data_bag"]                        = "passwords"
 default["percona"]["server"]["enable"]                          = true
 
 # Basic Settings
-default["percona"]["server"]["role"]                            = "server"
+default["percona"]["server"]["role"]                            = "standalone"
 default["percona"]["server"]["username"]                        = "mysql"
 default["percona"]["server"]["datadir"]                         = "/var/lib/mysql"
 default["percona"]["server"]["tmpdir"]                          = "/tmp"

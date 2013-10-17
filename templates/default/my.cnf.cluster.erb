@@ -69,6 +69,7 @@ wsrep_sst_auth                 = <%= node["percona"]["cluster"]["sst_user"] %>:<
 wsrep_sst_auth                 = ""
 <% end %>
 wsrep_node_name                = <%= node["percona"]["cluster"]["wsrep_node_name"] %>
+wsrep_node_address             = <%= node["percona"]["cluster"]["wsrep_node_address"] %>
 innodb_locks_unsafe_for_binlog = <%= node["percona"]["cluster"]["innodb_locks_unsafe_for_binlog"] %>
 innodb_autoinc_lock_mode       = <%= node["percona"]["cluster"]["innodb_autoinc_lock_mode"] %>
 

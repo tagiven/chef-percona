@@ -74,8 +74,8 @@ end
 template percona["main_config_file"] do
   source "my.cnf.#{conf ? "custom" : server["role"]}.erb"
   owner "root"
-  group "root"
-  mode 0600
+  group "mysql"
+  mode 0640
   if node["percona"]["cluster"]["bootstrap"] 
     notifies :run, resources(:execute => "bootstrap cluster"), :immediately if node["percona"]["auto_restart"]
   else

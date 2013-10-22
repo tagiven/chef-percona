@@ -87,7 +87,7 @@ end
 execute "Update MySQL root password" do
   command "mysqladmin --user=root --password='' password '#{passwords.root_password}'"
   if node["percona"]["server"]["role"] == "cluster"
-    not_if { "test -f /etc/mysql/grants.sql" &&  !node["percona"]["cluster"]["bootstrap"] && %Q[mysql -B -N -u root -e 'SELECT password FROM mysql.user WHERE user = "root" AND host = "localhost";'] }
+    not_if { "test -f /etc/mysql/grants.sql" &&  !node["percona"]["cluster"]["bootstrap"] && !%Q[mysql -B -N -u root -e 'SELECT password FROM mysql.user WHERE user = "root" AND host = "localhost";'].empty? }
   else
     not_if "test -f /etc/mysql/grants.sql" 
   end

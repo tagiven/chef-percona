@@ -1,3 +1,4 @@
+include_recipe "mysql::ruby"
 include_recipe "percona::package_repo"
 
 # install packages

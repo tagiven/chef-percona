@@ -114,8 +114,9 @@ myisam-recover = <%= node["percona"]["server"]["myisam_recover"] %>
 #
 # * Query Cache Configuration
 #
-query_cache_limit = <%= node["percona"]["server"]["query_cache_limit"] %>
-query_cache_size  = <%= node["percona"]["server"]["query_cache_size"] %>
+## Disabled due to conflicts with Galera cluster
+#query_cache_limit = <%= node["percona"]["server"]["query_cache_limit"] %>
+#query_cache_size  = <%= node["percona"]["server"]["query_cache_size"] %>
 
 #
 # * Logging and Replication

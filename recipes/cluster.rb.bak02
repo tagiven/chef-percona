@@ -1,0 +1,56 @@
+#include_recipe "mysql::ruby"
+#include_recipe "percona::package_repo"
+
+# install packages
+case node["platform_family"]
+when "debian"
+  package "percona-xtradb-cluster-server-5.5" do
+    options "--force-yes"
+  end
+when "rhel"
+  package "mysql-libs" do
+    action :remove
+  end
+
+  # Dependency of Percona Server
+  include_recipe "yum::epel"
+
+  package "socat" do
+    action :install
+  end
+
+  include_recipe "yum"
+  
+  yum_key "RPM-GPG-KEY-percona" do
+    url "http://www.percona.com/downloads/RPM-GPG-KEY-percona"
+    action :nothing
+  end.run_action(:add)
+
+  arch = node['kernel']['machine'] == "x86_64" ? "x86_64" : "i386"
+  pversion = node['platform_version'].to_i
+  yum_repository "percona" do
+    repo_name "Percona"
+    description "Percona Repo"
+    url "http://repo.percona.com/centos/#{pversion}/os/#{arch}/"
+    key "RPM-GPG-KEY-percona"
+    action :nothing
+  end.run_action(:add)
+
+  p = package "Percona-XtraDB-Cluster-server" do
+    action :nothing
+  end
+  p.run_action(:install) 
+
+  pdev = package "Percona-XtraDB-Cluster-devel" do
+    action :nothing
+  end
+  pdev.run_action(:install)
+
+end
+
+chef_gem 'mysql'
+
+include_recipe "percona::configure_server"
+
+# access grants
+include_recipe "percona::access_grants"

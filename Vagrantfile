@@ -36,7 +36,7 @@ Vagrant.configure("2") do |config|
           :wsrep_sst_method => "xtrabackup",
           :sst_user => "sstuser",
           :sst_password => "sstpassword",
-          :bootstrap => false
+          :bootstrap => true
         }
       }
     } 

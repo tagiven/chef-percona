@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
         :server => {
           :includedir => "",
           :role => "cluster",
-          :bind_address => "33.33.33.20",
+          #:bind_address => "33.33.33.20",
           :sst_password => "sstpassword",
           :root_password => "password123"
         },

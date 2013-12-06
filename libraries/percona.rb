@@ -1,18 +1,16 @@
 class Chef::Recipe::Percona
 
   def self.is_root_password_set?(host, username, password)
-    begin
-      print "#{host} #{username} #{password}"
-      require 'mysql'
-      m = Mysql.new(host, username, password)
-      print "Connection successful"
-      t = m.list_dbs
-      print "list successful"
-      return true
-    rescue Exception => e
-      print "database connection not successful"
-      return false
+    m = system("mysql -h #{host} -u #{username} -p#{password} -e 'STATUS;'")
+      
+    if m
+      print "Database Connection successful"
+    else
+      print "Database Connection failed"
     end
-  end
 
+    print "\n\nconnection status: #{m}\n\n"
+    return m
+  end
 end
+

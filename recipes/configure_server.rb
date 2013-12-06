@@ -85,9 +85,10 @@ end
 
 # now let's set the root password only if this is the initial install
 execute "Update MySQL root password" do
+  print "\n\n#{Percona.is_root_password_set?(node["percona"]["server"]["bind_address"],"root",node["percona"]["server"]["root_password"] )}\n"
   command "mysqladmin --user=root --password='' password '#{passwords.root_password}'"
-  if node["percona"]["server"]["role"] == "cluster"
-    not_if { "test -f /etc/mysql/grants.sql" &&  !node["percona"]["cluster"]["bootstrap"] }
+  if node["percona"]["server"]["role"] == "cluster"  
+    not_if { Percona.is_root_password_set?(node["percona"]["server"]["bind_address"],"root",node["percona"]["server"]["root_password"] ) }
   else
     not_if "test -f /etc/mysql/grants.sql"
   end

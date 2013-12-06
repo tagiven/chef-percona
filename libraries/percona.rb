@@ -1,7 +1,7 @@
 class Chef::Recipe::Percona
 
-  def self.is_root_password_set?(host, username, password)
-    m = system("mysql -h #{host} -u #{username} -p#{password} -e 'STATUS;'")
+  def self.is_root_password_set?(username, password)
+    m = system("mysql -u #{username} -p#{password} -e 'STATUS;'")
       
     if m
       print "Database Connection successful"

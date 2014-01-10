@@ -22,6 +22,7 @@ Vagrant.configure("2") do |config|
     chef.log_level = :debug
     chef.json = {
       :percona => {
+        :main_config_file => "/etc/mysql/my.cnf",
         :server => {
           :includedir => "",
           :role => "cluster",
@@ -31,6 +32,7 @@ Vagrant.configure("2") do |config|
         },
         :cluster => {
           :wsrep_cluster_name => "",
+          :wsrep_provider => "/usr/lib/libgalera_smm.so",
           :wsrep_cluster_address => "gcomm://33.33.33.20,33.33.33.30,33.33.33.10",
           :wsrep_node_address => "33.33.33.10",
           :wsrep_node_name => "percona01",

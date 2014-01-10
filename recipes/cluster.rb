@@ -18,7 +18,8 @@ when "rhel"
     action :install
   end
 
-  package "Percona-XtraDB-Cluster-server"
+  package "Percona-XtraDB-Cluster-server" 
+
 end
 
 include_recipe "percona::configure_server"

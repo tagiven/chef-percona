@@ -32,7 +32,7 @@ user    = mysqld["username"] || server["username"]
 
 # define the service
 service "mysql" do
-  supports :restart => true
+  supports :restart => true, :stop => true, :status => true
   action server["enable"] ? :enable : :disable
 end
 
@@ -68,6 +68,11 @@ execute "bootstrap cluster" do
     command "service mysql bootstrap-pxc"
   end
   action :nothing
+end
+
+# Stop mysql prior to bootstrap
+service "mysql" do 
+  action :stop
 end
 
 # setup the main server config file
@@ -107,7 +112,13 @@ template "/etc/mysql/debian.cnf" do
   owner "root"
   group "root"
   mode 0640
-  notifies :restart, "service[mysql]", :immediately if node["percona"]["auto_restart"]
+
+  if node["percona"]["cluster"]["bootstrap"]
+    notifies :run, resources(:execute => "bootstrap cluster"), :immediately if node["percona"]["auto_restart"]
+  else
+    notifies :restart, "service[mysql]", :immediately if node["percona"]["auto_restart"]
+  end
 
   only_if { node["platform_family"] == "debian" }
+  action :nothing
 end
